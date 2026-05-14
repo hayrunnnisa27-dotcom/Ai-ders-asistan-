@@ -1,0 +1,30 @@
+import google.generativeai as genai
+import os
+
+# Gemini API anahtarını buraya eklemelisin
+# Güvenlik için normalde çevre değişkeni kullanılır
+genai.configure(api_key="YOUR_GEMINI_API_KEY")
+
+def ders_asistani():
+    model = genai.GenerativeModel('gemini-pro')
+    
+    print("--- Gemini Ders Asistanına Hoş Geldin! ---")
+    print("Sana hangi ders konusunda yardımcı olabilirim? (Çıkmak için 'q' tuşuna bas)")
+
+    while True:
+        soru = input("\nSen: ")
+        
+        if soru.lower() == 'q':
+            print("İyi çalışmalar dilerim!")
+            break
+            
+        prompt = f"Bir ders asistanı olarak şu soruyu detaylı ve anlaşılır şekilde açıkla: {soru}"
+        
+        try:
+            response = model.generate_content(prompt)
+            print(f"\nAsistan: {response.text}")
+        except Exception as e:
+            print(f"Bir hata oluştu: {e}")
+
+if __name__ == "__main__":
+    ders_asistani()
